@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Locals_index')
+@section('title', 'talhaos.index')
 
 @section('content')
-<a href="{{ route('locals.create') }}" class="btn btn-success">Inserir Local</a>
+<a href="{{ route('talhaos.create', $local->id) }}" class="btn btn-success">Inserir Talhão</a>
 
  @if(session()->get('success'))
     <div class="alert alert-success mt-3">
@@ -15,23 +15,23 @@
   <thead>
     <tr>
       <th width="5%">ID</th>
-      <th width="50%">Local</th>
+      <th width="50%">Talhão</th>
       <th>Ações</th>
     </tr>
   </thead>
   <tbody>
-   @foreach($locals as $local)
+   @foreach($talhaos as $talhao)
     <tr>
-      <td>{{ $local->id }}</td>
-      <td>{{ $local->nome }}</td>
+      <td>{{ $talhao->id }}</td>
+      <td>{{ $talhao->nome }}</td>
       <td class="table-buttons">
-        <a href="{{ route('locals.edit', $local) }}" class="btn btn-primary">
+        <a href="{{ route('talhaos.edit', $talhao) }}" class="btn btn-primary">
           <i class="fa fa-pencil" ></i> Editar
         </a>
-        <a href="{{ route('talhaos.index', $local) }}" class="btn btn-success">
-        <i class="fa fa-eye" ></i> Talhões
+        <a href="{{ route('analises.index', ['local_id' => $talhao->local_id , 'talhao_id' => $talhao->id]) }}" class="btn btn-success">
+          <i class="fa fa-eye"></i> Analises
         </a>
-        <form method="POST" action="{{ route('locals.destroy', $local) }}">
+        <form method="POST" action="{{ route('talhaos.destroy', $talhao) }}">
          @csrf
          @method('DELETE')
             <button type="submit" class="btn btn-danger">
