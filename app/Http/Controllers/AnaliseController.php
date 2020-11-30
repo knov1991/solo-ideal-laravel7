@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Analise;
 use App\Models\Local;
 use App\Models\Talhao;
@@ -28,12 +29,70 @@ class AnaliseController extends Controller
      */
     public function index($local_id, $talhao_id)
     {
+        $a = 1;
+        $b = 2;
+        $test = [$a,$b];
+        
+
         $local = Local::find($local_id);
         $talhao = Talhao::find($talhao_id);
         $analises = Analise::where('talhao_id','=',$talhao_id)->get();
+        //dd($analises);
+        
+        // Busca ChartJS - inicio
+        $busca = DB::select("
+        SELECT * FROM analises WHERE talhao_id = 12
+        ");
+        $ph=0;
+        $nitrogenio=0;
+        $fosforo=0;
+        $potassio=0;
+        $calcio=0;
+        $magnesio=0;
+        $enxofre=0;
+        $boro=0;
+        $cobre=0;
+        $cloro=0;
+        $ferro=0;
+        $molibdenio=0;
+        $zinco=0;
+        $totalAnalises = $analises->count();
+        for($i=0;$i<$totalAnalises;$i++){
+            $ph=$ph+$busca[$i]->ph;
+            $nitrogenio=$nitrogenio+$busca[$i]->nitrogenio;
+            $fosforo=$fosforo+$busca[$i]->fosforo;
+            $potassio=$potassio+$busca[$i]->potassio;
+            $calcio=$calcio+$busca[$i]->calcio;
+            $magnesio=$magnesio+$busca[$i]->magnesio;
+            $enxofre=$enxofre+$busca[$i]->enxofre;
+            $boro=$boro+$busca[$i]->boro;
+            $cobre=$cobre+$busca[$i]->cobre;
+            $cloro=$cloro+$busca[$i]->cloro;
+            $ferro=$ferro+$busca[$i]->ferro;
+            $molibdenio=$molibdenio+$busca[$i]->molibdenio;
+            $zinco=$zinco+$busca[$i]->zinco;
+        }
+        $calculoAnalise = [
+            $ph/$totalAnalises,
+            $nitrogenio/$totalAnalises,
+            $fosforo/$totalAnalises,
+            $potassio/$totalAnalises,
+            $calcio/$totalAnalises,
+            $magnesio/$totalAnalises,
+            $enxofre/$totalAnalises,
+            $boro/$totalAnalises,
+            $cobre/$totalAnalises,
+            $cloro/$totalAnalises,
+            $ferro/$totalAnalises,
+            $molibdenio/$totalAnalises,
+            $zinco/$totalAnalises
+        ];
+        //dd($calculoAnalise);
+        // Busca ChartJS - fim
 
-        return view('analises.index', compact('analises', 'local', 'talhao'));
+        return view('analises.index', compact('analises', 'local', 'talhao', 'calculoAnalise'));
     }
+            
 
     /**
      * Show the form for creating a new resource.

@@ -3,6 +3,7 @@
 @section('title', 'analises.index')
 
 @section('content')
+<div class="container">
 <a href="{{ route('analises.create', ['local_id' => $local->id, 'talhao_id' => $talhao->id]) }}" class="btn btn-success">Inserir Talhão</a>
 
  @if(session()->get('success'))
@@ -50,7 +51,7 @@
       <td>{{ $analise->ferro }}</td>
       <td>{{ $analise->molibdenio }}</td>
       <td>{{ $analise->zinco }}</td>
-      <td class="table-buttons">
+      <td class="table-buttons row">
         <a href="{{ route('analises.edit', $analise) }}" class="btn btn-primary">
           <i class="fa fa-pencil" ></i> Editar
         </a>
@@ -61,9 +62,111 @@
               <i class="fa fa-trash"></i> Deletar
             </button>
         </form>
+        
       </td>
     </tr>
   @endforeach
   </tbody>
 </table>
+</div>
+
+<hr>
+
+<div class="container">
+  <canvas id="myChart" width="100" height="40"></canvas>
+</div>
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Ph', 'Nitrogenio', 'Fosforo', 'Potassio', 'Calcio', 'Magnesio', 'Enxofre', 'Boro', 'Cobre', 'Cloro', 'Ferro', 'Molibdenio', 'Zinco'],
+        /* datasets: [{
+            label: '# of Votes',
+            data: [{{ implode(',', $calculoAnalise) }}], */
+
+            datasets: [{
+            label: 'Analise',
+            data: [{{ implode(',', $calculoAnalise) }}],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+        }, {
+            label: 'Ideal',
+            data: [5.5, 10, 30, 3, 40, 8, 15, 0.6, 0.8, 10, 10, 15, 1.2],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1
+        }],
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+
 @endsection

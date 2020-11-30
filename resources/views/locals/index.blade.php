@@ -3,6 +3,7 @@
 @section('title', 'Locals_index')
 
 @section('content')
+<div class="container">
 <a href="{{ route('locals.create') }}" class="btn btn-success">Inserir Local</a>
 
  @if(session()->get('success'))
@@ -14,7 +15,6 @@
 <table class="table table-striped mt-3">
   <thead>
     <tr>
-      <th width="5%">ID</th>
       <th width="50%">Local</th>
       <th>Ações</th>
     </tr>
@@ -22,14 +22,13 @@
   <tbody>
    @foreach($locals as $local)
     <tr>
-      <td>{{ $local->id }}</td>
       <td>{{ $local->nome }}</td>
-      <td class="table-buttons">
+      <td class="table-buttons row">
+        <a href="{{ route('talhaos.index', $local) }}" class="btn btn-success">
+          <i class="fa fa-eye" ></i> Talhões
+        </a>
         <a href="{{ route('locals.edit', $local) }}" class="btn btn-primary">
           <i class="fa fa-pencil" ></i> Editar
-        </a>
-        <a href="{{ route('talhaos.index', $local) }}" class="btn btn-success">
-        <i class="fa fa-eye" ></i> Talhões
         </a>
         <form method="POST" action="{{ route('locals.destroy', $local) }}">
          @csrf
@@ -43,4 +42,5 @@
   @endforeach
   </tbody>
 </table>
+</div>
 @endsection
